@@ -39,7 +39,7 @@ def erweiterter_euklid(a: int, b: int) -> Tuple[int, int, int]:
     return g, x, y
 
 def elemente_multiplikative_gruppe(n: float) -> list[float]:
-    return [i for i in range(1, 14) if math.gcd(i, n) == 1]
+    return [i for i in range(1, n) if math.gcd(i, n) == 1]
 
 def ordnung_multiplikative_gruppe(n: float) -> float:
     return len(elemente_multiplikative_gruppe(n))
