@@ -44,9 +44,24 @@ def elemente_multiplikative_gruppe(n: float) -> list[float]:
 def ordnung_multiplikative_gruppe(n: float) -> float:
     return len(elemente_multiplikative_gruppe(n))
 
+def bisektion(f: Callable[[float], float], a: float, b: float, tol: float = 1e-6, max_iter: int = 100) -> float:
+    if f(a) * f(b) >= 0:
+        raise ValueError("Die Funktionswerte an den Intervallgrenzen müssen unterschiedliche Vorzeichen haben.")
+
+    for _ in range(max_iter):
+        c = (a + b) / 2  
+        if abs(f(c)) < tol or (b - a) / 2 < tol:
+            return c  
+
+        if f(a) * f(c) < 0:
+            b = c  
+        else:
+            a = c  
+
+    return (a + b) / 2  
+
 
 if __name__ == "__main__":
-    #Beispiele für Nutzung
     def f(x):
         return 1/(2*x + 1)
     
@@ -77,3 +92,8 @@ if __name__ == "__main__":
 
     #Test für Elemente einer multiplikativen Gruppe
     print(f"Die Elemente der multiplikativen Gruppe Z{14} sind {elemente_multiplikative_gruppe(14)} mit Ordnung {ordnung_multiplikative_gruppe(14)}")
+
+
+    #Test für Bisektionsverfahren
+    nullstelle = bisektion(lambda x: x**2 - 4, 0, 3)
+    print(f"Gefundene Nullstelle: {nullstelle:.6f}")
